@@ -1,6 +1,6 @@
 name: Waypoints.Plates
 version: 0.1
-main: com.github.sessional.waypoints.plates.WpsPlatesPlugin
+main: waypoints.plates.WpsPlatesPlugin
 commands:
   wpssigns:
     description: root command

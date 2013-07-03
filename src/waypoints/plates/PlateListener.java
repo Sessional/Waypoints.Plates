@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.sessional.waypoints.plates;
+package waypoints.plates;
 
-import com.github.sessional.waypoints.WpsPlugin;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -14,6 +13,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import waypoints.Waypoint;
+import waypoints.WaypointPlugin;
 
 /**
  *
@@ -38,7 +39,6 @@ class PlateListener implements Listener {
             int y = plateLocation.getBlockY();
             int z = plateLocation.getBlockZ();
             World w = plateLocation.getWorld();
-
             Location infront = new Location(w, x + 1, y, z);
             Location behind = new Location(w, x - 1, y, z);
             Location right = new Location(w, x, y, z + 1);
@@ -49,21 +49,27 @@ class PlateListener implements Listener {
             if (infront.getBlock().getType() == Material.WALL_SIGN || infront.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) infront.getBlock().getState();
                 handleWarp(p, s);
+                event.setCancelled(true);
             } else if (behind.getBlock().getType() == Material.WALL_SIGN || behind.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) behind.getBlock().getState();
                 handleWarp(p, s);
+                event.setCancelled(true);
             } else if (right.getBlock().getType() == Material.WALL_SIGN || right.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) right.getBlock().getState();
                 handleWarp(p, s);
+                event.setCancelled(true);
             } else if (left.getBlock().getType() == Material.WALL_SIGN || left.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) left.getBlock().getState();
                 handleWarp(p, s);
+                event.setCancelled(true);
             } else if (above.getBlock().getType() == Material.WALL_SIGN || above.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) above.getBlock().getState();
                 handleWarp(p, s);
+                event.setCancelled(true);
             } else if (below.getBlock().getType() == Material.WALL_SIGN || below.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) below.getBlock().getState();
                 handleWarp(p, s);
+                event.setCancelled(true);
             }
         }
     }
@@ -73,15 +79,14 @@ class PlateListener implements Listener {
         for (int i = 0; i < s.getLines().length - 1; i++) {
             if (s.getLine(i).equals("Waypoint:") || s.getLine(i).equals("§aWaypoint:")) {
                 String wp = s.getLine(i + 1);
-                WpsPlugin plug = (WpsPlugin) plugin.getServer().getPluginManager().getPlugin("Waypoints");
+                WaypointPlugin plug = (WaypointPlugin) plugin.getServer().getPluginManager().getPlugin("Waypoints");
                 if (plugin.isBukkitPermissions()) {
-                    if (p.hasPermission("waypoints.basic.go") || p.hasPermission("waypoints.plate.go")) {
+                    if (p.hasPermission("waypoints.go") || p.hasPermission("waypoints.plates")) {
                         if (!s.getLine(i).equals("§aWaypoint:")) {
                             s.setLine(i, "§aWaypoint:");
                         }
-                        plug.getCommandHandler().doGo(p, new String[]{
-                            wp
-                        });
+                        
+                        plug.getCommandHandler().doGo(p, wp);
                     } else {
                         p.sendMessage("You do not have permission to pressure plate waypoint.");
                     }
@@ -90,9 +95,8 @@ class PlateListener implements Listener {
                         s.setLine(i, "§aWaypoint:");
                         s.update();
                     }
-                    plug.getCommandHandler().doGo(p, new String[]{
-                        wp
-                    });
+                    
+                    p.teleport(plug.getWaypoint(wp).getLocation());
                 }
             }
         }
