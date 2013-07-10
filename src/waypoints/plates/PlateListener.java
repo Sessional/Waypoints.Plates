@@ -30,8 +30,9 @@ class PlateListener implements Listener {
 
     @EventHandler
     public void OnPlateStep(PlayerInteractEvent event) {
-        if (event.getAction() != Action.PHYSICAL)
+        if (event.getAction() != Action.PHYSICAL) {
             return;
+        }
         if (event.getClickedBlock().getType() == Material.WOOD_PLATE || event.getClickedBlock().getType() == Material.STONE_PLATE) {
             Player p = event.getPlayer();
             Location plateLocation = event.getClickedBlock().getLocation();
@@ -85,8 +86,7 @@ class PlateListener implements Listener {
                         if (!s.getLine(i).equals("§aWaypoint:")) {
                             s.setLine(i, "§aWaypoint:");
                         }
-                        
-                        plug.getCommandHandler().doGo(p, wp);
+                        p.teleport(plug.getWaypoint(wp).getLocation());
                     } else {
                         p.sendMessage("You do not have permission to pressure plate waypoint.");
                     }
@@ -95,7 +95,6 @@ class PlateListener implements Listener {
                         s.setLine(i, "§aWaypoint:");
                         s.update();
                     }
-                    
                     p.teleport(plug.getWaypoint(wp).getLocation());
                 }
             }
