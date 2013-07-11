@@ -7,6 +7,7 @@ package waypoints.plates;
 import java.io.File;
 import java.util.logging.Logger;
 import org.bukkit.plugin.java.JavaPlugin;
+import waypoints.WaypointPlugin;
 
 /**
  *
@@ -14,22 +15,16 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class WpsPlatesPlugin extends JavaPlugin
 {
-    
-    private static final Logger log = Logger.getLogger("Minecraft");
-    private String version = "0.1.1";
-    private File configFile;
     private boolean bukkitPermissions;
+    
+    private WaypointPlugin plugin;
     
     @Override
     public void onEnable()
     {
-        configFile = new File("./plugins/Waypoints.Plates/config.yml");
-        if (!configFile.exists())
-        {
-            this.saveDefaultConfig();
-        }
+        plugin = (WaypointPlugin) getServer().getPluginManager().getPlugin("Waypoints");
         
-        if (this.getConfig().getBoolean("bukkitPermissions") == true)
+        if (plugin.getConfigManager().permissionsEnabled())
         {
             bukkitPermissions = true;
         } else
@@ -38,6 +33,11 @@ public class WpsPlatesPlugin extends JavaPlugin
         }
         
         getServer().getPluginManager().registerEvents(new PlateListener(this), this);
+    }
+    
+    public WaypointPlugin getPlugin()
+    {
+        return plugin;
     }
     
     public boolean isBukkitPermissions()

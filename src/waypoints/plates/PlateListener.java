@@ -13,8 +13,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import waypoints.Waypoint;
-import waypoints.WaypointPlugin;
 
 /**
  *
@@ -80,13 +78,12 @@ class PlateListener implements Listener {
         for (int i = 0; i < s.getLines().length - 1; i++) {
             if (s.getLine(i).equals("Waypoint:") || s.getLine(i).equals("§aWaypoint:")) {
                 String wp = s.getLine(i + 1);
-                WaypointPlugin plug = (WaypointPlugin) plugin.getServer().getPluginManager().getPlugin("Waypoints");
                 if (plugin.isBukkitPermissions()) {
                     if (p.hasPermission("waypoints.go") || p.hasPermission("waypoints.plates")) {
                         if (!s.getLine(i).equals("§aWaypoint:")) {
                             s.setLine(i, "§aWaypoint:");
                         }
-                        p.teleport(plug.getWaypoint(wp).getLocation());
+                        p.teleport(plugin.getPlugin().getWaypoint(wp).getLocation());
                     } else {
                         p.sendMessage("You do not have permission to pressure plate waypoint.");
                     }
@@ -95,7 +92,7 @@ class PlateListener implements Listener {
                         s.setLine(i, "§aWaypoint:");
                         s.update();
                     }
-                    p.teleport(plug.getWaypoint(wp).getLocation());
+                    p.teleport(plugin.getPlugin().getWaypoint(wp).getLocation());
                 }
             }
         }
