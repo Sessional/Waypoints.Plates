@@ -49,26 +49,37 @@ class PlateListener implements Listener {
                 Sign s = (Sign) infront.getBlock().getState();
                 handleWarp(p, s);
                 event.setCancelled(true);
-            } else if (behind.getBlock().getType() == Material.WALL_SIGN || behind.getBlock().getType() == Material.SIGN_POST) {
+                return;
+            }
+            if (behind.getBlock().getType() == Material.WALL_SIGN || behind.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) behind.getBlock().getState();
                 handleWarp(p, s);
                 event.setCancelled(true);
-            } else if (right.getBlock().getType() == Material.WALL_SIGN || right.getBlock().getType() == Material.SIGN_POST) {
+                return;
+            }
+            if (right.getBlock().getType() == Material.WALL_SIGN || right.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) right.getBlock().getState();
                 handleWarp(p, s);
                 event.setCancelled(true);
-            } else if (left.getBlock().getType() == Material.WALL_SIGN || left.getBlock().getType() == Material.SIGN_POST) {
+                return;
+            }
+            if (left.getBlock().getType() == Material.WALL_SIGN || left.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) left.getBlock().getState();
                 handleWarp(p, s);
                 event.setCancelled(true);
-            } else if (above.getBlock().getType() == Material.WALL_SIGN || above.getBlock().getType() == Material.SIGN_POST) {
+                return;
+            }
+            if (above.getBlock().getType() == Material.WALL_SIGN || above.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) above.getBlock().getState();
                 handleWarp(p, s);
                 event.setCancelled(true);
-            } else if (below.getBlock().getType() == Material.WALL_SIGN || below.getBlock().getType() == Material.SIGN_POST) {
+                return;
+            }
+            if (below.getBlock().getType() == Material.WALL_SIGN || below.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) below.getBlock().getState();
                 handleWarp(p, s);
                 event.setCancelled(true);
+                return;
             }
         }
     }
