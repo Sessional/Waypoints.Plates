@@ -93,6 +93,7 @@ class PlateListener implements Listener {
                     if (p.hasPermission("waypoints.go") || p.hasPermission("waypoints.plates")) {
                         if (!s.getLine(i).equals("§aWaypoint:")) {
                             s.setLine(i, "§aWaypoint:");
+                            s.update();
                         }
                         p.teleport(plugin.getPlugin().getWaypoint(wp).getLocation());
                     } else {
