@@ -47,44 +47,44 @@ class PlateListener implements Listener {
 
             if (infront.getBlock().getType() == Material.WALL_SIGN || infront.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) infront.getBlock().getState();
-                handleWarp(p, s);
-                event.setCancelled(true);
+                if (handleWarp(p, s))
+                    event.setCancelled(true);
                 return;
             }
             if (behind.getBlock().getType() == Material.WALL_SIGN || behind.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) behind.getBlock().getState();
-                handleWarp(p, s);
-                event.setCancelled(true);
+                if (handleWarp(p, s))
+                    event.setCancelled(true);
                 return;
             }
             if (right.getBlock().getType() == Material.WALL_SIGN || right.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) right.getBlock().getState();
-                handleWarp(p, s);
-                event.setCancelled(true);
+                if (handleWarp(p, s))
+                    event.setCancelled(true);
                 return;
             }
             if (left.getBlock().getType() == Material.WALL_SIGN || left.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) left.getBlock().getState();
-                handleWarp(p, s);
-                event.setCancelled(true);
+                if (handleWarp(p, s))
+                    event.setCancelled(true);
                 return;
             }
             if (above.getBlock().getType() == Material.WALL_SIGN || above.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) above.getBlock().getState();
-                handleWarp(p, s);
-                event.setCancelled(true);
+                if (handleWarp(p, s))
+                    event.setCancelled(true);
                 return;
             }
             if (below.getBlock().getType() == Material.WALL_SIGN || below.getBlock().getType() == Material.SIGN_POST) {
                 Sign s = (Sign) below.getBlock().getState();
-                handleWarp(p, s);
-                event.setCancelled(true);
+                if (handleWarp(p, s))
+                    event.setCancelled(true);
                 return;
             }
         }
     }
 
-    public void handleWarp(Player p, Sign s) {
+    public boolean handleWarp(Player p, Sign s) {
 
         for (int i = 0; i < s.getLines().length - 1; i++) {
             if (s.getLine(i).equals("Waypoint:") || s.getLine(i).equals("§aWaypoint:")) {
@@ -96,8 +96,10 @@ class PlateListener implements Listener {
                             s.update();
                         }
                         p.teleport(plugin.getPlugin().getWaypoint(wp).getLocation());
+                        return true;
                     } else {
                         p.sendMessage("You do not have permission to pressure plate waypoint.");
+                        return false;
                     }
                 } else {
                     if (!s.getLine(i).equals("§aWaypoint:")) {
@@ -105,8 +107,10 @@ class PlateListener implements Listener {
                         s.update();
                     }
                     p.teleport(plugin.getPlugin().getWaypoint(wp).getLocation());
+                    return true;
                 }
             }
         }
+        return false;
     }
 }
