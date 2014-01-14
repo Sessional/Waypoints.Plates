@@ -1,5 +1,5 @@
 name: Waypoints.Plates
-version: 2.3
+version: 2.4
 main: waypoints.plates.WpsPlatesPlugin
 commands:
   wpssigns:
