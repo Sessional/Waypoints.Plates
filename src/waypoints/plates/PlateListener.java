@@ -126,12 +126,12 @@ class PlateListener implements Listener
                         }
                         if (plugin.getPlugin().getConfigManager().costingEnabled())
                         {
-                            int cost = Integer.parseInt(s.getLine(i + 2));
-                            if (s.getLine(i + 2) == "")
+                            if (s.getLine(i + 2).equals(""))
                             {
                                 plugin.getPlugin().getCommandHandler().doGo(p, wp);
                             } else
                             {
+                                int cost = Integer.parseInt(s.getLine(i + 2));
                                 if (p.getLevel() < cost)
                                 {
                                     p.sendMessage("You do not have the required levels to do that.");
